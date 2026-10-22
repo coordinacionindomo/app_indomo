@@ -23,14 +23,18 @@ jobs:
       with:
         channel: 'stable'
 
-    - name: Generate Android project structure
+    - name: Create Flutter structure
       run: flutter create . --platforms=android --org=com.indomo.app
+
+    - name: Configure Android SDK
+      run: |
+        echo "ndk.dir=" >> android/local.properties
 
     - name: Install Dependencies
       run: flutter pub get
 
     - name: Build APK
-      run: flutter build apk --release --no-tree-shake-icons
+      run: flutter build apk --release --no-tree-shake-icons --no-build-shared-library
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
